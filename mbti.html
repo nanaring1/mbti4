@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>부리부리 짱구 MBTI 테스트</title>
+
+  <!-- Bootstrap 테마 추가 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+  
+  <!-- css 연결 -->
+  <link rel="stylesheet" href="./style.css" />
+
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js" integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+
+  <script>
+    Kakao.init("f351b030e0c58252daf99cdc1471fb60"); // 사용하려는 앱의 JavaScript 키 입력
+    console.log(Kakao.isInitialized());
+
+    // 결과를 저장할 변수
+    let testResult = '';
+
+    function start() {
+      // 테스트 시작 함수 구현
+    }
+
+    function setResult(result) {
+      // 테스트 결과를 설정하고 화면에 표시하는 함수
+      testResult = result;
+      document.getElementById('result_img').src = `/image/${result}.png`;
+      document.querySelector('.explain').innerText = `${result}에 대한 설명입니다.`;
+      document.getElementById('title').innerText = `당신의 결과는 ${result}!`;
+    }
+
+    function shareMessage() {
+      Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '부리부리 짱구 MBTI 테스트 결과',
+          description: `나의 MBTI 결과는 ${testResult}입니다!`,
+          imageUrl: `https://yourwebsite.com/image/${testResult}.png`, // 이미지 URL
+          link: {
+            mobileWebUrl: 'https://yourwebsite.com',
+            webUrl: 'https://yourwebsite.com',
+          },
+        },
+        buttons: [
+          {
+            title: '테스트 해보기',
+            link: {
+              mobileWebUrl: 'https://yourwebsite.com',
+              webUrl: 'https://yourwebsite.com',
+            },
+          },
+        ],
+      });
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <section id="main" class="mx-auto my-5 py-5 px-3">
+      <h1>부리부리 짱구 MBTI 테스트</h1>
+      <div class="col-lg-6 col-md-8 col-sm-10 col-12 mx-auto">
+        <img src="./image/ENTP1.png" alt="mainImage" class="img-fluid" />
+      </div>
+      <p class="py-3 mt-3">
+        나는 짱구는 못말려 중 어떤 캐릭터일까? <br />
+        MBTI 기반으로 알아보는 부리부리 짱구 테스트 <br />
+        아래 시작하기 버튼을 눌러 시작해 주세요
+      </p>
+      <button type="button" class="btn btn-outline-danger mt-3" onclick="start()">시작하기</button>
+      <p class="pt-5">made by Heonna </p>
+    </section>
+
+    <section id="qna">
+      <div class="progress mx-auto mt-5">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <div class="qBox my-5 py-3 mx-auto">
+        <h2 id="title" class="questionMain p-3">문제</h2>
+        <input id="type" type="hidden" value="EI" />
+        <div class="button-warp">
+          <button id="A" type="button" class="my-2 mx-3">Primary</button>
+          <button id="B" type="button" class="my-2 mx-3">Primary</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="result" class="mx-auto my-5 py-5 px-3">
+      <h1>당신의 결과는?!</h1>
+      <div class="subtitle">설명</div>
+      <div class="img my-3 col-lg-6 col-md-8 col-sm-10 col-12 mx-auto">
+        <img class="img-fluid" id="result_img" src="./image/ENFJ1.png" />
+      </div>
+      <div class="explain"></div>
+      <button type="button" id="shareURL" class="share mt-3 py-2 px-3" onclick="shareURL()">링크 복사하기</button>
+      <button type="button" id="kakao" class="share mt-3 py-2 px-3" onclick="shareMessage()">카카오톡 공유하기</button>
+    </section>
+  </div>
+
+  <input type="hidden" id="EI" value="0" />
+  <input type="hidden" id="SN" value="0" />
+  <input type="hidden" id="TF" value="0" />
+  <input type="hidden" id="JP" value="0" />
+
+  <script src="./index.js"></script>
+  <script src="./data_R.js"></script>
+  <script src="./data_Q.js"></script>
+</body>
+</html>
